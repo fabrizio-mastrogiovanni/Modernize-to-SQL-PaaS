@@ -201,21 +201,7 @@ sql-app   sqladmin   2026-09-07 17:21:51.943
 (1 rows affected)
 PASS: SQL connection successful
 ```
-
-### 7 · Rotate the password — the payoff
-
-```bash
-NEW_PWD="$(openssl rand -base64 18 | tr -d '/+=' | head -c 20)Aa1!"
-az sql server update -g "$RG_LAB03" -n "$SQL_SERVER" --admin-password "$NEW_PWD"
-az keyvault secret set --vault-name "$KV" -n SqlAdminPassword --value "$NEW_PWD" -o none
-unset NEW_PWD
-```
-
-Wait 30s, re-run step 6 unchanged — it passes.
-
-**Two commands. No VM changes. No redeploy.** If the password lived in a config file, every consumer would need updating. This is the whole argument for the architecture.
-
-### 8 · Observability
+### 7 · Observability
 
 Portal → `sql-app` → **Monitoring → Metrics** → `DTU percentage`, aggregation `Max`. A near-zero line still confirms the database is live and emitting telemetry. Sustained 80%+ is the scale-up signal in production.
 
@@ -253,14 +239,6 @@ Three issues found and corrected:
 3. **No end-to-end validation.** The lab stops at "the role assignment exists," which confirms configuration, not function. Steps 5–7 close that gap.
 
 **Intentional deviation:** `vm-db-lab02` was kept, not deleted, to preserve the Lab 02 NSG rules (`Allow-Web-To-Postgres` @100, `Deny-All-VNet-Inbound` @4000) as demonstrable evidence.
-
----
-
-## Future Work
-
-- **Remove the password entirely** — switch the server to "Use both" auth, run `CREATE USER [vm-web-lab02] FROM EXTERNAL PROVIDER`, connect with `sqlcmd -G`, then delete the secret. No password anywhere in the system.
-- **Rebuild in Terraform or Bicep** — Labs 01–03 are portal-built. IaC makes the whole environment disposable and reviewable in a PR.
-- **Private endpoint on Key Vault** — currently open to all networks with RBAC as the only control.
 
 ---
 
