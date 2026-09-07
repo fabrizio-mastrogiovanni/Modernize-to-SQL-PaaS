@@ -10,7 +10,8 @@ Replace a self-managed database VM with Azure SQL Database (PaaS), and give the 
 
 ---
 
-
+## Watch me on the Walkthrough Video
+https://www.loom.com/share/0b2c3d415af444f0b861a5ff28bd5de8
 
 ## Architecture
 
