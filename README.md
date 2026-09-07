@@ -1,4 +1,4 @@
-# Lab 03 — PaaS Migration & Secretless Auth with Managed Identity
+# PaaS Migration & Secretless Auth with Managed Identity
 
 **Author:** Fabrizio Mastrogiovanni
 
