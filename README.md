@@ -1,4 +1,4 @@
-# PaaS Migration & Secretless Auth with Managed Identity
+# Modernize to SQL PaaS
 
 **Author:** Fabrizio Mastrogiovanni
 
